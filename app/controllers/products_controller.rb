@@ -20,7 +20,7 @@ class ProductsController < BaseController
   
     # PATCH/PUT /products/:id
     def update
-      product = Product.find(params[:id])
+      product = Product.find_by(id: params[:id])
       if product.update(product_params)
         render json: { product: product, message: 'Product updated successfully' }
       else
