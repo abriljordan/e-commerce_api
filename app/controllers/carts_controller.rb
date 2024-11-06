@@ -21,7 +21,7 @@ class CartsController < BaseController
       cart_item = CartItem.find_or_initialize_by(cart: cart, product_id: params[:product_id])
   
       # Increment quantity of the product
-      cart_item.quantity = (cart_item.quantity || 0) + params[:quantity].to_i
+      cart_item.quantity = [cart_item.quantity.to_i + params[:quantity].to_i, 1].max # Prevent negative quantity
   
       if cart_item.save
         render json: { message: 'Product added to cart', cart_item: cart_item }, status: :created
@@ -39,22 +39,25 @@ class CartsController < BaseController
         total_cost = 0.0
         cart.cart_items.each do |item|
           product = item.product
-          if product.inventory && product.inventory >= item.quantity
-            total_cost += product.price * item.quantity
-          else
+          
+          if product.inventory.nil? || product.inventory < item.quantity
             render json: { error: "Insufficient inventory for #{product.name}" }, status: :unprocessable_entity and return
           end
+          
+          total_cost += product.price * item.quantity
         end
   
-        # Deduct inventory and clear cart
-        cart.cart_items.each do |item|
-          item.product.update(inventory: item.product.inventory - item.quantity)
+        # Deduct inventory and clear cart within a transaction
+        ActiveRecord::Base.transaction do
+          cart.cart_items.each do |item|
+            item.product.update!(inventory: item.product.inventory - item.quantity)
+          end
+          cart.cart_items.destroy_all  # Clear the cart after successful checkout
         end
-        cart.cart_items.destroy_all  # Clear the cart after successful checkout
   
         render json: { message: 'Checkout successful', total_cost: total_cost }, status: :ok
       else
-        render json: { error: 'Cart is empty' }, status: :unprocessable_entity
+        render json: { error: 'Cart is empty' }, status: :not_found
       end
     end
   end

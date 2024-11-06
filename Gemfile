@@ -48,4 +48,7 @@ gem 'jwt'
 gem 'stripe'
 
 # RSpec for testing
-gem 'rspec-rails', group: [:development, :test]
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+end
