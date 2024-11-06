@@ -1,6 +1,9 @@
+# config/routes.rb
 Rails.application.routes.draw do
-post '/signup', to: 'authentication#signup'
-post '/login', to: 'authentication#login'
-get '/protected_endpoint', to: 'protected#show'
-
-end
+    # User authentication routes
+    post '/signup', to: 'authentication#signup'
+    post '/login', to: 'authentication#login'
+  
+    # Product routes (some are admin-only)
+    resources :products, only: [:index, :create, :update, :destroy]
+  end
