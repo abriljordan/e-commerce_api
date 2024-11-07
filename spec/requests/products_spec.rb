@@ -14,14 +14,27 @@ RSpec.describe 'Products', type: :request do
   
       it 'returns a list of products' do
         expect(response).to have_http_status(:ok)
-  
         # Parse response body to JSON
         json_response = JSON.parse(response.body)
-  
         # Check that the response has an array under the 'products' key
         expect(json_response).to have_key('products')
         expect(json_response['products']).to be_an(Array)
         expect(json_response['products'].size).to eq(1) # Adjust if you expect more products
+      end
+    end
+
+    context 'when there are no products' do
+      before do
+        # Ensure the database is clean before this test runs
+        Product.delete_all # Clear any existing products
+        token = JsonWebToken.encode(user_id: admin_user.id)
+        get '/products', headers: { 'Authorization' => "Bearer #{token}" }
+      end
+  
+      it 'returns an empty list' do
+        expect(response).to have_http_status(:ok)
+        json_response = JSON.parse(response.body)
+        expect(json_response['products']).to be_empty
       end
     end
   end
@@ -40,11 +53,54 @@ RSpec.describe 'Products', type: :request do
       end
     end
 
-  # Testing the ProductsController Update Action
+    context 'when an admin user tries to create a product with valid parameters' do
+      before do
+        token = JsonWebToken.encode(user_id: admin_user.id)
+        post '/products', params: { product: { name: 'New Admin Product', price: 200, inventory: 10 } },
+                          headers: { 'Authorization' => "Bearer #{token}" }
+      end
+  
+      it 'creates the product successfully' do
+        expect(response).to have_http_status(:created)
+        json_response = JSON.parse(response.body)
+        expect(json_response['product']['name']).to eq('New Admin Product')
+      end
+    end
+
+    context 'when an admin user tries to create a product with invalid parameters' do
+      before do
+        token = JsonWebToken.encode(user_id: admin_user.id)
+        post '/products', params: { product: { name: '', price: -10, inventory: nil } }, # Invalid parameters
+                          headers: { 'Authorization' => "Bearer #{token}" }
+        @json_response = JSON.parse(response.body) # Parse the response for assertions
+      end
+    
+      it 'returns an error message' do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(@json_response['errors']).to include("Name can't be blank")
+        expect(@json_response['errors']).to include("Price must be greater than or equal to 0")
+        expect(@json_response['errors']).to include("Inventory can't be blank")
+        expect(@json_response['errors']).to include("Inventory is not a number")
+      end
+    end
+
+    context 'when an admin user tries to delete a non-existent product' do
+      before do
+        token = JsonWebToken.encode(user_id: admin_user.id)
+        delete '/products/99999', headers: { 'Authorization' => "Bearer #{token}" } # Non-existent ID
+      end
+    
+      it 'returns a not found error' do
+        expect(response).to have_http_status(:not_found)
+        json_response = JSON.parse(response.body)
+        expect(json_response['error']).to eq('Product not found')
+      end
+    end
+
+    # Testing the ProductsController Update Action
     describe 'PATCH /products/:id' do
       context 'when an admin user updates a product' do
         let!(:existing_product) { create(:product, name: 'Old Product') }
-    
         before do
           token = JsonWebToken.encode(user_id: admin_user.id)
           patch "/products/#{existing_product.id}", params: { product: { name: 'Updated Product', price: 150, inventory: 20 } },
@@ -71,6 +127,21 @@ RSpec.describe 'Products', type: :request do
           expect(response).to have_http_status(:forbidden)
         end
       end
+
+      context 'when trying to update a non-existent product' do
+        before do
+          token = JsonWebToken.encode(user_id: admin_user.id)
+          patch '/products/99999', params: { product: { name: 'Updated Name' } },
+                                    headers: { 'Authorization' => "Bearer #{token}" }
+        end
+    
+        it 'returns a not found error' do
+          expect(response).to have_http_status(:not_found)
+          json_response = JSON.parse(response.body)
+          expect(json_response['error']).to eq('Product not found')
+        end
+      end
+
     end
 
     # Testing the ProductsController Destroy Action
