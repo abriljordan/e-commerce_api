@@ -1,5 +1,6 @@
 class ProductsController < BaseController
   before_action :authorize_admin!, only: [:create, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /products
   def index
@@ -41,6 +42,10 @@ class ProductsController < BaseController
   end
 
   private
+
+  def authenticate_user!
+    render json: { error: 'Not Authorized' }, status: :unauthorized unless current_user
+  end
 
   def authorize_admin!
     render json: { error: 'Forbidden' }, status: :forbidden unless current_user&.admin?
