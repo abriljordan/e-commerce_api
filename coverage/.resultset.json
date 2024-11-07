@@ -1,0 +1,361 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/Users/abriljordancasinillo/Desktop/github-projects/roadmap-sh/backend-beginner/ecommerce_api/app/models/user.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/abriljordancasinillo/Desktop/github-projects/roadmap-sh/backend-beginner/ecommerce_api/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/abriljordancasinillo/Desktop/github-projects/roadmap-sh/backend-beginner/ecommerce_api/app/controllers/authentication_controller.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null,
+          null,
+          1,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          2,
+          null,
+          2,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          0,
+          null,
+          null
+        ]
+      },
+      "/Users/abriljordancasinillo/Desktop/github-projects/roadmap-sh/backend-beginner/ecommerce_api/app/controllers/application_controller.rb": {
+        "lines": [
+          1,
+          1,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/abriljordancasinillo/Desktop/github-projects/roadmap-sh/backend-beginner/ecommerce_api/app/lib/json_web_token.rb": {
+        "lines": [
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null
+        ]
+      },
+      "/Users/abriljordancasinillo/Desktop/github-projects/roadmap-sh/backend-beginner/ecommerce_api/app/channels/application_cable/channel.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/abriljordancasinillo/Desktop/github-projects/roadmap-sh/backend-beginner/ecommerce_api/app/channels/application_cable/connection.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/abriljordancasinillo/Desktop/github-projects/roadmap-sh/backend-beginner/ecommerce_api/app/controllers/base_controller.rb": {
+        "lines": [
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/abriljordancasinillo/Desktop/github-projects/roadmap-sh/backend-beginner/ecommerce_api/app/controllers/carts_controller.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/abriljordancasinillo/Desktop/github-projects/roadmap-sh/backend-beginner/ecommerce_api/app/controllers/products_controller.rb": {
+        "lines": [
+          null,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/abriljordancasinillo/Desktop/github-projects/roadmap-sh/backend-beginner/ecommerce_api/app/controllers/protected_controller.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/abriljordancasinillo/Desktop/github-projects/roadmap-sh/backend-beginner/ecommerce_api/app/jobs/application_job.rb": {
+        "lines": [
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/abriljordancasinillo/Desktop/github-projects/roadmap-sh/backend-beginner/ecommerce_api/app/mailers/application_mailer.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/abriljordancasinillo/Desktop/github-projects/roadmap-sh/backend-beginner/ecommerce_api/app/models/cart.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/abriljordancasinillo/Desktop/github-projects/roadmap-sh/backend-beginner/ecommerce_api/app/models/cart_item.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/abriljordancasinillo/Desktop/github-projects/roadmap-sh/backend-beginner/ecommerce_api/app/models/product.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      }
+    },
+    "timestamp": 1730954830
+  }
+}

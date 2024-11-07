@@ -52,3 +52,10 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
 end
+
+# Gemfile
+gem 'database_cleaner-active_record'
+
+gem 'simplecov', require: false, group: :test
+
+gem 'shoulda-matchers', '~> 5.0'

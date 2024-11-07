@@ -10,6 +10,8 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
+
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -32,11 +34,25 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+
+module JsonHelper
+  def json
+    JSON.parse(response.body)
+  end
+end
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [
     Rails.root.join('spec/fixtures')
   ]
+
+  config.include JsonHelper, type: :request
+
+  config.define_derived_metadata(file_path: %r{/spec/support/}) do |metadata|
+    metadata[:type] = :support
+  end
+  
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -65,4 +81,38 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  config.include FactoryBot::Syntax::Methods
+
+
+
+  # DatabaseCleaner setup
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
+
+
+  require 'simplecov'
+  SimpleCov.start 'rails' do
+    minimum_coverage 90
+  end
+
+  Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+  RSpec.configure do |config|
+    config.include AuthHelpers
+  end
+
+  Shoulda::Matchers.configure do |config|
+    config.integrate do |with|
+      with.test_framework :rspec
+      with.library :rails
+    end
+  end
+  
 end

@@ -37,6 +37,10 @@ class ProductsController < BaseController
       render json: { message: 'Product deleted successfully' }, status: :ok
     end
   
+    def authorize_admin
+      render json: { error: 'Unauthorized' }, status: :unauthorized unless @current_user.admin?
+    end
+    
     private
   
     def product_params
