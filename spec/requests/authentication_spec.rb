@@ -1,14 +1,11 @@
-# spec/requests/authentication_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'Authentication', type: :request do
+  let(:user) { create(:user, email: 'user@example.com', password: 'password') }
+
   describe 'POST /login' do
-    let(:user) { create(:user, email: 'user@example.com', password: 'password') }
-    
     context 'with valid credentials' do
-      before do
-        post '/login', params: { email: user.email, password: 'password' }
-      end
+      before { post '/login', params: { email: user.email, password: 'password' } }
 
       it 'returns status code 200' do
         expect(response).to have_http_status(:ok)
@@ -16,9 +13,7 @@ RSpec.describe 'Authentication', type: :request do
     end
 
     context 'with invalid credentials' do
-      before do
-        post '/login', params: { email: user.email, password: 'incorrect_password' }
-      end
+      before { post '/login', params: { email: user.email, password: 'wrongpassword' } }
 
       it 'returns status code 401' do
         expect(response).to have_http_status(:unauthorized)

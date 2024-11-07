@@ -307,7 +307,7 @@ DEPENDENCIES
   rails (~> 7.2.2)
   rspec-rails
   rubocop-rails-omakase
-  shoulda-matchers (~> 5.0)
+  shoulda-matchers
   simplecov
   sqlite3 (>= 1.4)
   stripe

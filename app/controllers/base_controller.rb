@@ -1,10 +1,12 @@
 # app/controllers/base_controller.rb
 class BaseController < ActionController::API
   before_action :authorize_request
+  before_action :authenticate_user
 
   attr_reader :current_user  # Make current_user accessible
 
   private
+
 
   def authorize_request
     header = request.headers['Authorization']
@@ -20,5 +22,9 @@ class BaseController < ActionController::API
     render json: { errors: e.message }, status: :unauthorized
   rescue JWT::DecodeError => e
     render json: { errors: 'Invalid token' }, status: :unauthorized
+  end
+
+  def authenticate_user
+    render json: { errors: 'Unauthorized' }, status: :unauthorized unless @current_user
   end
 end
