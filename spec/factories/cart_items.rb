@@ -1,7 +1,8 @@
+# spec/factories/cart_items.rb
 FactoryBot.define do
     factory :cart_item do
-        association :cart, factory: :cart
-        association :product, factory: :product
-        quantity { 1 }
+      association :cart
+      association :product
+      quantity { 1 }
     end
-end
+  end

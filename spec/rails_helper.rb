@@ -97,7 +97,26 @@ RSpec.configure do |config|
     end
   end
 
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
 
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, js: true) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+  
   require 'simplecov'
   SimpleCov.start 'rails' do
     minimum_coverage 90
@@ -108,6 +127,8 @@ RSpec.configure do |config|
     config.include AuthHelpers
   end
 
+  config.include ApiHelpers, type: :request
+
   Shoulda::Matchers.configure do |config|
     config.integrate do |with|
       with.test_framework :rspec
@@ -115,4 +136,9 @@ RSpec.configure do |config|
     end
   end
   
+  def auth_headers(user)
+    token = JsonWebToken.encode(user_id: user.id)
+    { 'Authorization': "Bearer #{token}" }
+  end
+
 end
